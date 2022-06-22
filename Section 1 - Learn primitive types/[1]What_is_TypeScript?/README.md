@@ -1,0 +1,24 @@
+# What is TypeScript?
+- `TypeScript` is an open-source language which builds on `JavaScript`.
+- `TypeScript`'s consisted a `Superset of JavaScript`, which means it takes `JavaScript` and adds new features to it.
+- Benefits of `TypeScript`:
+  - Up-to-date documentation
+  - Active debugging
+  - Acitve development
+  - Large community
+  - Less likely to become deprecated
+- `TypeScript` supports
+  - Validate your code is working correctly
+  - Writing Types is Optional
+  - Client and Server side developemnt
+  - Transcompiles to `JavaScript`
+  - Browsers can't compile `TypeScript`
+- Pros of `TypeScript`
+  - Code that has less more
+  - Cleaner
+  - More readable
+  - No need for pseudocode
+  - Client and Server side
+  - Optional
+- Cons of `TypeScript`
+  - Requires compilation
