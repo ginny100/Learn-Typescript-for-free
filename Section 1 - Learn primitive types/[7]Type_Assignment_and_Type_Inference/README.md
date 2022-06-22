@@ -1,0 +1,5 @@
+# Type Assignment and Type Inference
+- Assigning type is a special syntax added by `TypeScript`. However, `JavaScript` does not understand it while the `TypeScript` compiler does. Behind the scene, our compiled `JavaScript` looks exactly the same as if we haven't added any types.
+- `Type Inference` means `TypeScript` understands which type you have for a certain variable.
+- When you define a variable with `let`, if you neither give it a type nor a value, `TypeScript` has no clue what should be the type for that variable. Therefore, `TypeScript` will give it the type of `any`. The best practice is that later on, make sure that anything assigned to that vartiable has a certain type. (Eg. `let age : number`, `let isOpen : boolean`)
+- If a variable is global and we won't worry about its type being changed, we would keep it as `const`.
