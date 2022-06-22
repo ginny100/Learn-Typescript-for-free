@@ -4,8 +4,45 @@ var utils_1 = require("./utils");
 var enums_1 = require("./enums");
 var propertyContainer = document.querySelector('.properties');
 var footer = document.querySelector('.footer');
-var isOpen;
+var isLoggedIn;
 // Reviews
+// Option 1: Using Any
+// const reviews: (
+//     {
+//         name: string;
+//         stars: number;
+//         loyaltyUser: Loyalties;
+//         date: string;
+//     } |
+//     {
+//         name: string;
+//         stars: number;
+//         loyaltyUser: Loyalties;
+//         date: string;
+//         description: string;
+//     }
+// )[] = [
+//         {
+//             name: 'Sheia',
+//             stars: 5,
+//             loyaltyUser: Loyalties.GOLD_USER,
+//             date: '01-04-2021'
+//         },
+//         {
+//             name: 'Andrzej',
+//             stars: 3,
+//             loyaltyUser: Loyalties.SILVER_USER,
+//             date: '28-03-2021'
+//         },
+//         {
+//             name: 'Omar',
+//             stars: 4,
+//             loyaltyUser: Loyalties.BRONZE_USER,
+//             date: '27-03-2021',
+//             description: 'Great hosts, location was a bit further than said'
+//         },
+//     ]
+// Option 2: Using Any
 var reviews = [
     {
         name: 'Sheia',
@@ -16,14 +53,15 @@ var reviews = [
     {
         name: 'Andrzej',
         stars: 3,
-        loyaltyUser: enums_1.Loyalties.SILVER_USER,
+        loyaltyUser: enums_1.Loyalties.BRONZE_USER,
         date: '28-03-2021'
     },
     {
         name: 'Omar',
         stars: 4,
-        loyaltyUser: enums_1.Loyalties.BRONZE_USER,
-        date: '27-03-2021'
+        loyaltyUser: enums_1.Loyalties.SILVER_USER,
+        date: '27-03-2021',
+        description: 'Great hosts, location was a bit further than said'
     },
 ];
 var you = {
@@ -43,10 +81,10 @@ var properties = [
         location: {
             firstLine: 'shack 37',
             city: 'Bogota',
-            zipcode: 45632,
+            code: 45632,
             country: 'Colombia'
         },
-        contact: [+1123495082908, 'marywinkle@gmail.com'],
+        contact: [+112343823978921, 'marywinkle@gmail.com'],
         isAvailable: true
     },
     {
@@ -56,10 +94,10 @@ var properties = [
         location: {
             firstLine: 'no 23',
             city: 'Gdansk',
-            zipcode: 343903,
+            code: 343903,
             country: 'Poland'
         },
-        contact: [+1123495082908, 'garydavis@hotmail.com'],
+        contact: [+1298239028490830, 'garydavis@hotmail.com'],
         isAvailable: false
     },
     {
@@ -69,16 +107,23 @@ var properties = [
         location: {
             firstLine: 'flat 15',
             city: 'London',
-            zipcode: 35433,
+            code: 35433,
             country: 'United Kingdom'
         },
-        contact: [+1123495082908, 'andyluger@aol.com'],
+        contact: [+34829374892553, 'andyluger@aol.com'],
         isAvailable: true
     }
 ];
 // Functions
 (0, utils_1.showReviewTotal)(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 (0, utils_1.populateUser)(you.isReturning, you.firstName);
+function showDetails(authorityStatus, element, price) {
+    if (authorityStatus) {
+        var priceDisplay = document.createElement('div');
+        priceDisplay.innerHTML = price.toString() + '/night';
+        element.appendChild(priceDisplay);
+    }
+}
 // Add the properties
 for (var i = 0; i < properties.length; i++) {
     var card = document.createElement('div');
@@ -88,6 +133,7 @@ for (var i = 0; i < properties.length; i++) {
     image.setAttribute('src', properties[i].image);
     card.appendChild(image);
     propertyContainer === null || propertyContainer === void 0 ? void 0 : propertyContainer.appendChild(card);
+    showDetails(you.permissions, card, properties[i].price);
 }
 // use your location, your current time, and the current temperature of your location
 var currentLocation = ['London', '11:35', 17];
