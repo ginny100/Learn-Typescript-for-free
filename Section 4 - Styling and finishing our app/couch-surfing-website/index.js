@@ -136,6 +136,19 @@ var properties = [
         },
         contact: [+34829374892553, 'andyluger@aol.com'],
         isAvailable: true
+    },
+    {
+        image: 'images/malaysian-hotel.jpeg',
+        title: 'Malia Hotel',
+        price: 35,
+        location: {
+            firstLine: 'Room 4',
+            city: 'Malia',
+            code: 45334,
+            country: 'Malaysia'
+        },
+        contact: [+60349822083, 'lee34@gmail.com'],
+        isAvailable: false
     }
 ];
 // Functions
@@ -146,9 +159,9 @@ for (var i = 0; i < properties.length; i++) {
     var card = document.createElement('div');
     card.classList.add('card');
     card.innerHTML = properties[i].title;
-    var image = document.createElement('img');
-    image.setAttribute('src', properties[i].image);
-    card.appendChild(image);
+    var image_1 = document.createElement('img');
+    image_1.setAttribute('src', properties[i].image);
+    card.appendChild(image_1);
     (0, utils_1.showDetails)(you.permissions, card, properties[i].price);
     propertyContainer === null || propertyContainer === void 0 ? void 0 : propertyContainer.appendChild(card);
 }
@@ -171,3 +184,22 @@ button.addEventListener('click', function () { return addReviews(reviews); });
 // use your location, your current time, and the current temperature of your location
 var currentLocation = ['London', '11:35', 17];
 footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°';
+// MainProperty Class
+var MainProperty = /** @class */ (function () {
+    function MainProperty(src, title, reviews) {
+        this.src = src;
+        this.title = title;
+        this.reviews = reviews;
+    }
+    return MainProperty;
+}());
+var yourMainProperty = new MainProperty('images/italian-property.jpg', 'Italian House', [{
+        name: 'Olive',
+        stars: 5,
+        loyaltyUser: enums_1.Loyalties.GOLD_USER,
+        date: '12-04-2021'
+    }]);
+var mainImageContainer = document.querySelector('.main-image');
+var image = document.createElement('img');
+image.setAttribute('src', yourMainProperty.src);
+mainImageContainer.appendChild(image);
