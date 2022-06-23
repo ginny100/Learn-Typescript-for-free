@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var utils_1 = require("./utils");
 var enums_1 = require("./enums");
+var classes_1 = require("./classes");
 var propertyContainer = document.querySelector('.properties');
 var reviewContainer = document.querySelector('.reviews');
 var container = document.querySelector('.container');
@@ -185,15 +186,7 @@ button.addEventListener('click', function () { return addReviews(reviews); });
 var currentLocation = ['London', '11:35', 17];
 footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°';
 // MainProperty Class
-var MainProperty = /** @class */ (function () {
-    function MainProperty(src, title, reviews) {
-        this.src = src;
-        this.title = title;
-        this.reviews = reviews;
-    }
-    return MainProperty;
-}());
-var yourMainProperty = new MainProperty('images/italian-property.jpg', 'Italian House', [{
+var yourMainProperty = new classes_1["default"]('images/italian-property.jpg', 'Italian House', [{
         name: 'Olive',
         stars: 5,
         loyaltyUser: enums_1.Loyalties.GOLD_USER,
