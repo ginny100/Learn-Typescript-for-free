@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.makeMultiple = exports.showDetails = exports.populateUser = exports.showReviewTotal = void 0;
+exports.getTopTwoReviews = exports.makeMultiple = exports.showDetails = exports.populateUser = exports.showReviewTotal = void 0;
 var enums_1 = require("./enums");
 var reviewTotalDisplay = document.querySelector('#reviews');
 var returningUserDisplay = document.querySelector('#returning-user');
@@ -55,3 +55,8 @@ function makeMultiple(value) {
         return '';
 }
 exports.makeMultiple = makeMultiple;
+function getTopTwoReviews(reviews) {
+    var sortedReviews = reviews.sort(function (a, b) { return b.stars - a.stars; });
+    return sortedReviews.slice(0, 2);
+}
+exports.getTopTwoReviews = getTopTwoReviews;

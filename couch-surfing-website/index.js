@@ -3,6 +3,9 @@ exports.__esModule = true;
 var utils_1 = require("./utils");
 var enums_1 = require("./enums");
 var propertyContainer = document.querySelector('.properties');
+var reviewContainer = document.querySelector('.reviews');
+var container = document.querySelector('.container');
+var button = document.querySelector('button');
 var footer = document.querySelector('.footer');
 var isLoggedIn;
 // Reviews
@@ -43,6 +46,28 @@ var isLoggedIn;
 //         },
 //     ]
 // Option 2: Using Any
+// const reviews: any[] = [
+//     {
+//         name: 'Sheia',
+//         stars: 5,
+//         loyaltyUser: Loyalties.GOLD_USER,
+//         date: '01-04-2021'
+//     },
+//     {
+//         name: 'Andrzej',
+//         stars: 3,
+//         loyaltyUser: Loyalties.BRONZE_USER,
+//         date: '28-03-2021'
+//     },
+//     {
+//         name: 'Omar',
+//         stars: 4,
+//         loyaltyUser: Loyalties.SILVER_USER,
+//         date: '27-03-2021',
+//         description: 'Great hosts, location was a bit further than said',
+//     },
+// ]
+// Option 3: Using fixed types for object and Interface
 var reviews = [
     {
         name: 'Sheia',
@@ -60,8 +85,7 @@ var reviews = [
         name: 'Omar',
         stars: 4,
         loyaltyUser: enums_1.Loyalties.SILVER_USER,
-        date: '27-03-2021',
-        description: 'Great hosts, location was a bit further than said'
+        date: '27-03-2021'
     },
 ];
 var you = {
@@ -117,13 +141,6 @@ var properties = [
 // Functions
 (0, utils_1.showReviewTotal)(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
 (0, utils_1.populateUser)(you.isReturning, you.firstName);
-function showDetails(authorityStatus, element, price) {
-    if (authorityStatus) {
-        var priceDisplay = document.createElement('div');
-        priceDisplay.innerHTML = price.toString() + '/night';
-        element.appendChild(priceDisplay);
-    }
-}
 // Add the properties
 for (var i = 0; i < properties.length; i++) {
     var card = document.createElement('div');
@@ -132,9 +149,25 @@ for (var i = 0; i < properties.length; i++) {
     var image = document.createElement('img');
     image.setAttribute('src', properties[i].image);
     card.appendChild(image);
+    (0, utils_1.showDetails)(you.permissions, card, properties[i].price);
     propertyContainer === null || propertyContainer === void 0 ? void 0 : propertyContainer.appendChild(card);
-    showDetails(you.permissions, card, properties[i].price);
 }
+//Add the reviews
+var count = 0;
+function addReviews(reviews) {
+    if (!count) {
+        count++;
+        var topTwo = (0, utils_1.getTopTwoReviews)(reviews);
+        for (var i = 0; i < topTwo.length; i++) {
+            var card = document.createElement('div');
+            card.classList.add('review-card');
+            card.innerHTML = topTwo[i].stars + ' stars from ' + topTwo[i].name;
+            reviewContainer.appendChild(card);
+        }
+        container.removeChild(button);
+    }
+}
+button.addEventListener('click', function () { return addReviews(reviews); });
 // use your location, your current time, and the current temperature of your location
 var currentLocation = ['London', '11:35', 17];
 footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°';
