@@ -1,22 +1,17 @@
-"use strict";
-exports.__esModule = true;
-exports.getTopTwoReviews = exports.makeMultiple = exports.showDetails = exports.populateUser = exports.showReviewTotal = void 0;
-var enums_1 = require("./enums");
-var reviewTotalDisplay = document.querySelector('#reviews');
-var returningUserDisplay = document.querySelector('#returning-user');
-var userNameDisplay = document.querySelector('#user');
-function showReviewTotal(value, reviewer, isLoyalty) {
-    var iconDisplay = enums_1.Loyalties.GOLD_USER ? '⭐' : '';
+import { Loyalties } from './enums.js';
+const reviewTotalDisplay = document.querySelector('#reviews');
+const returningUserDisplay = document.querySelector('#returning-user');
+const userNameDisplay = document.querySelector('#user');
+export function showReviewTotal(value, reviewer, isLoyalty) {
+    const iconDisplay = Loyalties.GOLD_USER ? '⭐' : '';
     reviewTotalDisplay.innerHTML = value.toString() + ' Review' + makeMultiple(value) + '| last reviewed by ' + reviewer + ' ' + iconDisplay;
 }
-exports.showReviewTotal = showReviewTotal;
-function populateUser(isReturning, userName) {
+export function populateUser(isReturning, userName) {
     if (isReturning == true) {
         returningUserDisplay.innerHTML = 'back';
     }
     userNameDisplay.innerHTML = userName;
 }
-exports.populateUser = populateUser;
 // Union Types example
 // function add(firstValue : (number | string), secondValue: (number | string)) {
 //     let result
@@ -35,28 +30,25 @@ exports.populateUser = populateUser;
 // }
 // const combinedReviews = add(5,1)
 // const firstNameLastName = add('Ania', 'Kubow')
-function showDetails(value, element, price) {
+export function showDetails(value, element, price) {
     if (value) {
-        var priceDisplay = document.createElement('div');
+        const priceDisplay = document.createElement('div');
         priceDisplay.innerHTML = price.toString() + '/night';
         element.appendChild(priceDisplay);
     }
 }
-exports.showDetails = showDetails;
 // Function Types example
 // function add(firstValue : number, secondValue : number) : number {
 //     return firstValue + secondValue
 // }
-function makeMultiple(value) {
+export function makeMultiple(value) {
     if (value > 1 || value == 0) {
         return 's';
     }
     else
         return '';
 }
-exports.makeMultiple = makeMultiple;
-function getTopTwoReviews(reviews) {
-    var sortedReviews = reviews.sort(function (a, b) { return b.stars - a.stars; });
+export function getTopTwoReviews(reviews) {
+    const sortedReviews = reviews.sort((a, b) => b.stars - a.stars);
     return sortedReviews.slice(0, 2);
 }
-exports.getTopTwoReviews = getTopTwoReviews;

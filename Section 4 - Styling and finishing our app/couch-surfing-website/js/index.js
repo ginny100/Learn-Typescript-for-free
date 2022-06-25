@@ -1,16 +1,12 @@
-import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from './utils'
-import { Permissions, Loyalties } from './enums'
-import { Review, Property } from './interfaces'
-import MainProperty from './classes'
-
-const propertyContainer = document.querySelector('.properties')
-const reviewContainer = document.querySelector('.reviews')!
-const container = document.querySelector('.container')!
-const button = document.querySelector('button')!
-const footer = document.querySelector('.footer')!
-
-let isLoggedIn: boolean
-
+import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from './utils.js';
+import { Permissions, Loyalties } from './enums.js';
+import MainProperty from './classes.js';
+const propertyContainer = document.querySelector('.properties');
+const reviewContainer = document.querySelector('.reviews');
+const container = document.querySelector('.container');
+const button = document.querySelector('button');
+const footer = document.querySelector('.footer');
+let isLoggedIn;
 // Reviews
 // Option 1: Using Any
 // const reviews: (
@@ -48,7 +44,6 @@ let isLoggedIn: boolean
 //             description: 'Great hosts, location was a bit further than said'
 //         },
 //     ]
-
 // Option 2: Using Any
 // const reviews: any[] = [
 //     {
@@ -71,9 +66,8 @@ let isLoggedIn: boolean
 //         description: 'Great hosts, location was a bit further than said',
 //     },
 // ]
-
 // Option 3: Using fixed types for object and Interface
-const reviews: Review[] = [
+const reviews = [
     {
         name: 'Sheia',
         stars: 5,
@@ -92,8 +86,7 @@ const reviews: Review[] = [
         loyaltyUser: Loyalties.SILVER_USER,
         date: '27-03-2021',
     },
-]
-
+];
 const you = {
     firstName: 'Bobby',
     lastName: 'Brown',
@@ -101,10 +94,9 @@ const you = {
     isReturning: true,
     age: 35,
     stayedAt: ['florida-home', 'oman-flat', 'tokyo-bungalow']
-}
-
+};
 // Array of Properties
-const properties: Property[] = [
+const properties = [
     {
         image: 'images/colombia-property.jpg',
         title: 'Colombian Shack',
@@ -157,59 +149,48 @@ const properties: Property[] = [
         contact: [+60349822083, 'lee34@gmail.com'],
         isAvailable: false
     }
-]
-
+];
 // Functions
-showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
-populateUser(you.isReturning, you.firstName)
-
+showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
+populateUser(you.isReturning, you.firstName);
 // Add the properties
 for (let i = 0; i < properties.length; i++) {
-    const card = document.createElement('div')
-    card.classList.add('card')
-    card.innerHTML = properties[i].title
-    const image = document.createElement('img')
-    image.setAttribute('src', properties[i].image)
-    card.appendChild(image)
-    showDetails(you.permissions, card, properties[i].price)
-    propertyContainer?.appendChild(card)
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = properties[i].title;
+    const image = document.createElement('img');
+    image.setAttribute('src', properties[i].image);
+    card.appendChild(image);
+    showDetails(you.permissions, card, properties[i].price);
+    propertyContainer?.appendChild(card);
 }
-
 //Add the reviews
-let count = 0
-function addReviews(reviews: Review[]): void {
+let count = 0;
+function addReviews(reviews) {
     if (!count) {
-        count++
-        const topTwo = getTopTwoReviews(reviews)
+        count++;
+        const topTwo = getTopTwoReviews(reviews);
         for (let i = 0; i < topTwo.length; i++) {
-            const card = document.createElement('div')
-            card.classList.add('review-card')
-            card.innerHTML = topTwo[i].stars + ' stars from ' + topTwo[i].name
-            reviewContainer.appendChild(card)
+            const card = document.createElement('div');
+            card.classList.add('review-card');
+            card.innerHTML = topTwo[i].stars + ' stars from ' + topTwo[i].name;
+            reviewContainer.appendChild(card);
         }
-        container.removeChild(button)
+        container.removeChild(button);
     }
 }
-
-button.addEventListener('click', () => addReviews(reviews))
-
+button.addEventListener('click', () => addReviews(reviews));
 // use your location, your current time, and the current temperature of your location
-let currentLocation: [string, string, number] = ['London', '11:35', 17]
-footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°'
-
+let currentLocation = ['London', '11:35', 17];
+footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°';
 // MainProperty Class
-let yourMainProperty = new MainProperty(
-    'images/italian-property.jpg',
-    'Italian House',
-    [{
+let yourMainProperty = new MainProperty('images/italian-property.jpg', 'Italian House', [{
         name: 'Olive',
         stars: 5,
         loyaltyUser: Loyalties.GOLD_USER,
         date: '12-04-2021'
-    }]
-)
-
-const mainImageContainer = document.querySelector('.main-image')!
-const image = document.createElement('img')
-image.setAttribute('src', yourMainProperty.src)
-mainImageContainer.appendChild(image)
+    }]);
+const mainImageContainer = document.querySelector('.main-image');
+const image = document.createElement('img');
+image.setAttribute('src', yourMainProperty.src);
+mainImageContainer.appendChild(image);

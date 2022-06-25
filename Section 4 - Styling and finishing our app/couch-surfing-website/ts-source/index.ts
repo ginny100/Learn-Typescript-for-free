@@ -1,14 +1,16 @@
-"use strict";
-exports.__esModule = true;
-var utils_1 = require("./utils");
-var enums_1 = require("./enums");
-var classes_1 = require("./classes");
-var propertyContainer = document.querySelector('.properties');
-var reviewContainer = document.querySelector('.reviews');
-var container = document.querySelector('.container');
-var button = document.querySelector('button');
-var footer = document.querySelector('.footer');
-var isLoggedIn;
+import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from './utils'
+import { Permissions, Loyalties } from './enums.js'
+import { Review, Property } from './interfaces.js'
+import MainProperty from './classes.js'
+
+const propertyContainer = document.querySelector('.properties')
+const reviewContainer = document.querySelector('.reviews')!
+const container = document.querySelector('.container')!
+const button = document.querySelector('button')!
+const footer = document.querySelector('.footer')!
+
+let isLoggedIn: boolean
+
 // Reviews
 // Option 1: Using Any
 // const reviews: (
@@ -46,6 +48,7 @@ var isLoggedIn;
 //             description: 'Great hosts, location was a bit further than said'
 //         },
 //     ]
+
 // Option 2: Using Any
 // const reviews: any[] = [
 //     {
@@ -68,37 +71,40 @@ var isLoggedIn;
 //         description: 'Great hosts, location was a bit further than said',
 //     },
 // ]
+
 // Option 3: Using fixed types for object and Interface
-var reviews = [
+const reviews: Review[] = [
     {
         name: 'Sheia',
         stars: 5,
-        loyaltyUser: enums_1.Loyalties.GOLD_USER,
+        loyaltyUser: Loyalties.GOLD_USER,
         date: '01-04-2021'
     },
     {
         name: 'Andrzej',
         stars: 3,
-        loyaltyUser: enums_1.Loyalties.BRONZE_USER,
+        loyaltyUser: Loyalties.BRONZE_USER,
         date: '28-03-2021'
     },
     {
         name: 'Omar',
         stars: 4,
-        loyaltyUser: enums_1.Loyalties.SILVER_USER,
-        date: '27-03-2021'
+        loyaltyUser: Loyalties.SILVER_USER,
+        date: '27-03-2021',
     },
-];
-var you = {
+]
+
+const you = {
     firstName: 'Bobby',
     lastName: 'Brown',
-    permissions: enums_1.Permissions.ADMIN,
+    permissions: Permissions.ADMIN,
     isReturning: true,
     age: 35,
     stayedAt: ['florida-home', 'oman-flat', 'tokyo-bungalow']
-};
+}
+
 // Array of Properties
-var properties = [
+const properties: Property[] = [
     {
         image: 'images/colombia-property.jpg',
         title: 'Colombian Shack',
@@ -133,7 +139,7 @@ var properties = [
             firstLine: 'flat 15',
             city: 'London',
             code: 35433,
-            country: 'United Kingdom'
+            country: 'United Kingdom',
         },
         contact: [+34829374892553, 'andyluger@aol.com'],
         isAvailable: true
@@ -146,53 +152,64 @@ var properties = [
             firstLine: 'Room 4',
             city: 'Malia',
             code: 45334,
-            country: 'Malaysia'
+            country: 'Malaysia',
         },
         contact: [+60349822083, 'lee34@gmail.com'],
         isAvailable: false
     }
-];
+]
+
 // Functions
-(0, utils_1.showReviewTotal)(reviews.length, reviews[0].name, reviews[0].loyaltyUser);
-(0, utils_1.populateUser)(you.isReturning, you.firstName);
+showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
+populateUser(you.isReturning, you.firstName)
+
 // Add the properties
-for (var i = 0; i < properties.length; i++) {
-    var card = document.createElement('div');
-    card.classList.add('card');
-    card.innerHTML = properties[i].title;
-    var image_1 = document.createElement('img');
-    image_1.setAttribute('src', properties[i].image);
-    card.appendChild(image_1);
-    (0, utils_1.showDetails)(you.permissions, card, properties[i].price);
-    propertyContainer === null || propertyContainer === void 0 ? void 0 : propertyContainer.appendChild(card);
+for (let i = 0; i < properties.length; i++) {
+    const card = document.createElement('div')
+    card.classList.add('card')
+    card.innerHTML = properties[i].title
+    const image = document.createElement('img')
+    image.setAttribute('src', properties[i].image)
+    card.appendChild(image)
+    showDetails(you.permissions, card, properties[i].price)
+    propertyContainer?.appendChild(card)
 }
+
 //Add the reviews
-var count = 0;
-function addReviews(reviews) {
+let count = 0
+function addReviews(reviews: Review[]): void {
     if (!count) {
-        count++;
-        var topTwo = (0, utils_1.getTopTwoReviews)(reviews);
-        for (var i = 0; i < topTwo.length; i++) {
-            var card = document.createElement('div');
-            card.classList.add('review-card');
-            card.innerHTML = topTwo[i].stars + ' stars from ' + topTwo[i].name;
-            reviewContainer.appendChild(card);
+        count++
+        const topTwo = getTopTwoReviews(reviews)
+        for (let i = 0; i < topTwo.length; i++) {
+            const card = document.createElement('div')
+            card.classList.add('review-card')
+            card.innerHTML = topTwo[i].stars + ' stars from ' + topTwo[i].name
+            reviewContainer.appendChild(card)
         }
-        container.removeChild(button);
+        container.removeChild(button)
     }
 }
-button.addEventListener('click', function () { return addReviews(reviews); });
+
+button.addEventListener('click', () => addReviews(reviews))
+
 // use your location, your current time, and the current temperature of your location
-var currentLocation = ['London', '11:35', 17];
-footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°';
+let currentLocation: [string, string, number] = ['London', '11:35', 17]
+footer.innerHTML = currentLocation[0] + ' ' + currentLocation[1] + ' ' + currentLocation[2] + '°'
+
 // MainProperty Class
-var yourMainProperty = new classes_1["default"]('images/italian-property.jpg', 'Italian House', [{
+let yourMainProperty = new MainProperty(
+    'images/italian-property.jpg',
+    'Italian House',
+    [{
         name: 'Olive',
         stars: 5,
-        loyaltyUser: enums_1.Loyalties.GOLD_USER,
+        loyaltyUser: Loyalties.GOLD_USER,
         date: '12-04-2021'
-    }]);
-var mainImageContainer = document.querySelector('.main-image');
-var image = document.createElement('img');
-image.setAttribute('src', yourMainProperty.src);
-mainImageContainer.appendChild(image);
+    }]
+)
+
+const mainImageContainer = document.querySelector('.main-image')!
+const image = document.createElement('img')
+image.setAttribute('src', yourMainProperty.src)
+mainImageContainer.appendChild(image)
